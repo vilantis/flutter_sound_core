@@ -80,7 +80,10 @@
                 };
                 NSError* error;
                 BOOL r = [converter convertToBuffer: convertedBuffer error: &error withInputFromBlock: inputBlock];
-                if (!r)
+                // This is not a standard way to handle ios errors
+                // Though - when recording with attached headphones which doesn't have mic
+                // r is False but error is nil. This should not happen in normal scenario
+                if (error and !r)
                 {
                         NSString* s =  error.localizedDescription;
                         
